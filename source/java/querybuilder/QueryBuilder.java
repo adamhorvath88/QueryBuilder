@@ -7,14 +7,18 @@ package querybuilder;
 public class QueryBuilder {
 
 	public void sample() {
-		new Select().from(Celebrity.class);
+		Query allCelebs = Query.Select().from(Celebrity.class);
 
-		new InsertInto(Celebrity.class, "id", "namne", "age").values(1, "Justin Bieber", 21);
+		Query celebsAges = Query.Select().distinct("age").from(Celebrity.class);
 
-		new Select("name").from(Celebrity.class);
+		Query whoIs22YO = Query.Select().count().from(Celebrity.class).where("age").equal(22);
 
-		new Update(Celebrity.class).set("age", 22).where("id").is(1);
+		Query addBieber = Query.Insert().into(Celebrity.class, "id", "name", "age").values(1, "Justin Bieber", 21);
 
-		new DeleteFrom(Celebrity.class).where("twitterHandle").isNull();
+		Query celebNames = Query.Select("name").from(Celebrity.class);
+
+		Query makeFirstCeleb22 = Query.Update(Celebrity.class).set("age", 22).where("id").equal(1);
+
+		Query deleteTwitterVirgins = Query.Delete().from(Celebrity.class).where("twitterHandle").isNull();
 	}
 }
